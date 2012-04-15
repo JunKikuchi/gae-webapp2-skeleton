@@ -8,6 +8,14 @@ def jinja2_factory(app):
   })
   return j
 
+def custom_dispatcher(router, request, response):
+  rv = router.default_dispatcher(request, response)
+  if isinstance(rv, basestring):
+    rv = webapp2.Response(rv)
+  elif isinstance(rv, tuple):
+    rv = webapp2.Response(*rv)
+  return rv
+
 class BaseHandler(webapp2.RequestHandler):
   @webapp2.cached_property
   def jinja2(self):
@@ -21,6 +29,13 @@ class IndexPage(BaseHandler):
     self.response.headers['Content-Type'] = 'text/html'
     self.render_response('index.html')
 
+class HelloPage(BaseHandler):
+  def get(self):
+    self.response.headers['Content-Type'] = 'text/html'
+    return "Hello World"
+
 app = webapp2.WSGIApplication([
-  webapp2.Route(r'/', handler=IndexPage, name='index'),
+  webapp2.Route(r'/',      handler=IndexPage, name='index'),
+  webapp2.Route(r'/hello', handler=HelloPage, name='hello'),
 ])
+app.router.set_dispatcher(custom_dispatcher)
