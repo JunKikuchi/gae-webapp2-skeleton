@@ -1,4 +1,3 @@
-import webapp2
 from webapp2_local.jinja2 import BaseHandler
 
 class HomeHandler(BaseHandler):
