@@ -8,7 +8,7 @@ def jinja2_factory(app):
   })
   return j
 
-class BaseHandler(webapp2.RequestHandler):
+class Jinja2Handler(webapp2.RequestHandler):
   @webapp2.cached_property
   def jinja2(self):
     return jinja2.get_jinja2(factory=jinja2_factory)
