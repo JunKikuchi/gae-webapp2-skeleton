@@ -1,10 +1,6 @@
 import webapp2
 import webapp2_local
+import config
 
-from helloworld.handler import HomeHandler, HelloHandler
-
-app = webapp2.WSGIApplication([
-  webapp2.Route(r'/',      handler=HomeHandler,  name='home'),
-  webapp2.Route(r'/hello', handler=HelloHandler, name='hello'),
-])
+app = webapp2.WSGIApplication(config.route)
 app.router.set_dispatcher(webapp2_local.custom_dispatcher)
