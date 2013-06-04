@@ -1,5 +1,6 @@
-from webapp2_local.session import SessionHandler
-from webapp2_local.jinja2  import Jinja2Handler
+import webapp2
+from webapp2_local.handlers.session import SessionHandler
+from webapp2_local.handlers.jinja2  import Jinja2Handler
 
 class BaseHandler(Jinja2Handler, SessionHandler):
   pass
@@ -13,4 +14,4 @@ class HomeHandler(BaseHandler):
 
 class HelloHandler(BaseHandler):
   def get(self):
-    return "Hello World"
+    return webapp2.Response("Hello World")
